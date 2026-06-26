@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: personal-notes
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-degistir-beni}
+      - JWT_SECRET=${JWT_SECRET:-degistir-beni-jwt-secret}
+      - DB_TYPE=${DB_TYPE:-sqlite}
+      - SQLITE_PATH=/app/data/notes.db
+      - DATABASE_URL=${DATABASE_URL:-}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-}
+      - RATE_LIMIT_MAX=${RATE_LIMIT_MAX:-100}
+    volumes:
+      - notes-data:/app/data
+
+  # PostgreSQL kullanmak isterseniz asagidaki blogu aktif edin:
+  # DB_TYPE=postgres ve DATABASE_URL=postgresql://notlar:sifre123@postgres:5432/notlar yapin
+  #
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: personal-notes-db
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_USER: notlar
+  #     POSTGRES_PASSWORD: sifre123
+  #     POSTGRES_DB: notlar
+  #   volumes:
+  #     - pg-data:/var/lib/postgresql/data
+
+volumes:
+  notes-data:
+  # pg-data:

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#e94560">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.json">
+  <title>Kisisel Notlar</title>
+  <link rel="stylesheet" href="/vendor/quill/quill.snow.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="login-screen" class="screen">
+    <div class="login-box">
+      <h1>Kisisel Notlar</h1>
+      <p>Giris yapin</p>
+      <input type="text" id="login-username" placeholder="Kullanici adi" autocomplete="username">
+      <input type="password" id="login-password" placeholder="Sifre" autocomplete="current-password">
+      <button id="login-btn">Giris Yap</button>
+      <div id="login-error" class="error"></div>
+    </div>
+  </div>
+
+  <div id="app-screen" class="screen hidden">
+    <div class="app-layout">
+      <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+          <h2>Notlarim</h2>
+          <div class="sidebar-actions">
+            <span id="sync-status" class="sync-dot connected" title="Bagli"></span>
+            <button class="btn-theme" id="btn-theme" title="Tema Degistir">&#9788; Acik</button>
+            <button class="btn-new" id="btn-new-note" title="Yeni Not">+ Yeni</button>
+            <button class="btn-icon btn-logout" id="btn-logout" title="Cikis">&#x2716;</button>
+          </div>
+        </div>
+        <div class="sidebar-search">
+          <input type="text" id="global-search" placeholder="Tum notlarda ara...">
+        </div>
+        <div id="notes-list" class="notes-list"></div>
+      </aside>
+
+      <main id="editor-panel" class="editor-panel">
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon">&#128221;</div>
+          <h3>Not secilmedi</h3>
+          <p>Sol panelden bir not secin veya yeni not olusturun</p>
+        </div>
+
+        <div id="editor-area" class="editor-area hidden">
+          <div class="editor-topbar">
+            <button id="btn-back" class="btn-back hidden">&#8592; Geri</button>
+            <input type="text" id="note-title" placeholder="Baslik yazin...">
+            <div class="editor-actions">
+              <input type="color" id="note-color" value="#ffffff" title="Not rengi">
+              <button class="btn-action" id="btn-pin" title="Sabitle">&#128204;</button>
+              <button class="btn-action btn-save" id="btn-save">Kaydet</button>
+              <button class="btn-action btn-delete" id="btn-delete" title="Sil">&#128465;</button>
+            </div>
+          </div>
+
+          <div class="note-search-bar">
+            <input type="text" id="note-search" placeholder="Bu not icinde ara...">
+            <span id="note-search-count"></span>
+            <button class="btn-sm" id="note-search-prev" title="Onceki">&#9650;</button>
+            <button class="btn-sm" id="note-search-next" title="Sonraki">&#9660;</button>
+            <button class="btn-sm" id="note-search-clear" title="Temizle">&#10005;</button>
+          </div>
+
+          <div id="quill-wrapper" class="quill-wrapper">
+            <div id="quill-toolbar">
+              <span class="ql-formats">
+                <button class="ql-bold" title="Kalin"></button>
+                <button class="ql-italic" title="Italik"></button>
+                <button class="ql-underline" title="Alti Cizili"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-header" value="1" title="Baslik 1"></button>
+                <button class="ql-header" value="2" title="Baslik 2"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-list" value="bullet" title="Madde Listesi"></button>
+                <button class="ql-list" value="ordered" title="Numarali Liste"></button>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-color" title="Yazi Rengi"></select>
+                <select class="ql-background" title="Vurgu Rengi"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-link" title="Link Ekle"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-clean" title="Formati Temizle"></button>
+              </span>
+            </div>
+            <div id="editor"></div>
+          </div>
+
+          <div class="editor-footer">
+            <span id="note-date"></span>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/vendor/quill/quill.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
